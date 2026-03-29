@@ -1,0 +1,8 @@
+[config]
+type = "scheme-content"
+json_format = "hex"
+contrast = 0.0
+
+[templates.quickshell]
+input_path = "~/.config/matugen/templates/quickshell-colors.json"
+output_path = "~/.cache/matugen/quickshell-colors.json"
