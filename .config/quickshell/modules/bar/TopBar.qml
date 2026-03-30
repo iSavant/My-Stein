@@ -10,12 +10,14 @@ Scope {
 
     property bool musicPopupVisible: false
 
+    MonitorConfig { id: monConfig }
+
     PanelWindow {
         id: bar
 
         screen: {
             for (var i = 0; i < Quickshell.screens.length; i++) {
-                if (Quickshell.screens[i].name === "DP-1") return Quickshell.screens[i];
+                if (Quickshell.screens[i].name === monConfig.primaryMonitor) return Quickshell.screens[i];
             }
             return Quickshell.screens[0];
         }
@@ -271,7 +273,7 @@ Scope {
 
                         Rectangle { width: 1; height: 16; color: colors.surface2 }
 
-                        // Music toggle
+                        // Music toggle (triggers IPC so popup + icon stay in sync)
                         Text {
                             text: "󰎆"
                             color: root.musicPopupVisible ? colors.blue : colors.overlay1
@@ -281,7 +283,7 @@ Scope {
                             MouseArea {
                                 anchors.fill: parent
                                 cursorShape: Qt.PointingHandCursor
-                                onClicked: root.musicPopupVisible = !root.musicPopupVisible
+                                onClicked: Quickshell.execDetached(["qs", "ipc", "call", "musicToggle"])
                             }
                         }
                     }

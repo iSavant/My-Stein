@@ -1,0 +1,22 @@
+# Cache and generated files
+*.local
+*.log
+*.tmp
+*.swp
+*~
+
+# Matugen generated output (template is tracked, output is not)
+.cache/
+
+# Python
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.kate-swp

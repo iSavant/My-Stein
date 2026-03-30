@@ -8,10 +8,14 @@ import "../../"
 Scope {
     id: root
 
+    MonitorConfig { id: monConfig }
+
     NotificationServer {
         id: notifServer
         keepOnReload: true
         onNotification: notification => {
+            // Mark as tracked so it appears in trackedNotifications
+            notification.tracked = true;
             // Auto-expire after 5 seconds if no timeout set
             if (notification.expireTimeout <= 0) {
                 notification.expireTimeout = 5000;
@@ -24,7 +28,7 @@ Scope {
 
         screen: {
             for (var i = 0; i < Quickshell.screens.length; i++) {
-                if (Quickshell.screens[i].name === "DP-1") return Quickshell.screens[i];
+                if (Quickshell.screens[i].name === monConfig.primaryMonitor) return Quickshell.screens[i];
             }
             return Quickshell.screens[0];
         }
