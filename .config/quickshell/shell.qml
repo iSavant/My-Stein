@@ -7,6 +7,7 @@ ShellRoot {
 
     // TopBar for DP-1 (horizontal, main monitor)
     Loader {
+        id: topBarLoader
         active: true
         source: "modules/bar/TopBar.qml"
     }
@@ -30,36 +31,10 @@ ShellRoot {
         source: "modules/notifications/NotificationPopup.qml"
     }
 
-    // Overview + App Launcher (Super+Tab)
+    // Overview + App Launcher (Super+Tab) — owns its own IPC target
     Loader {
         active: true
         source: "modules/overview/Overview.qml"
-    }
-
-    // IPC handlers for toggling widgets
-    IpcHandler {
-        target: "musicToggle"
-        function handleCall(data) {
-            if (musicLoader.item) {
-                musicLoader.item.visible = !musicLoader.item.visible;
-            }
-        }
-    }
-
-    IpcHandler {
-        target: "wallpaperToggle"
-        function handleCall(data) {
-            if (wallpaperLoader.item) {
-                wallpaperLoader.item.visible = !wallpaperLoader.item.visible;
-            }
-        }
-    }
-
-    IpcHandler {
-        target: "overviewToggle"
-        function handleCall(data) {
-            // Overview handles its own toggle internally
-        }
     }
 
     // Wallpaper picker (toggled via IPC)
@@ -68,4 +43,31 @@ ShellRoot {
         active: true
         source: "modules/wallpaper/WallpaperPicker.qml"
     }
+
+    // IPC: toggle music popup
+    IpcHandler {
+        target: "musicToggle"
+        function handleCall(data) {
+            if (musicLoader.item) {
+                musicLoader.item.popupVisible = !musicLoader.item.popupVisible;
+            }
+            // Sync TopBar icon state
+            if (topBarLoader.item) {
+                topBarLoader.item.musicPopupVisible = musicLoader.item ? musicLoader.item.popupVisible : false;
+            }
+        }
+    }
+
+    // IPC: toggle wallpaper picker
+    IpcHandler {
+        target: "wallpaperToggle"
+        function handleCall(data) {
+            if (wallpaperLoader.item) {
+                wallpaperLoader.item.pickerVisible = !wallpaperLoader.item.pickerVisible;
+            }
+        }
+    }
+
+    // NOTE: overviewToggle IPC target is defined in Overview.qml itself
+    // Do NOT define it here to avoid duplicate target error
 }

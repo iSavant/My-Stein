@@ -11,6 +11,8 @@ Scope {
 
     property bool overviewVisible: false
 
+    MonitorConfig { id: monConfig }
+
     IpcHandler {
         target: "overviewToggle"
         function handleCall(data) {
@@ -26,7 +28,7 @@ Scope {
 
         screen: {
             for (var i = 0; i < Quickshell.screens.length; i++) {
-                if (Quickshell.screens[i].name === "DP-1") return Quickshell.screens[i];
+                if (Quickshell.screens[i].name === monConfig.primaryMonitor) return Quickshell.screens[i];
             }
             return Quickshell.screens[0];
         }

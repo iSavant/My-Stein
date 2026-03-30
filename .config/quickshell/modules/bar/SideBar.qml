@@ -8,12 +8,14 @@ import "../../"
 Scope {
     id: root
 
+    MonitorConfig { id: monConfig }
+
     PanelWindow {
         id: sidebar
 
         screen: {
             for (var i = 0; i < Quickshell.screens.length; i++) {
-                if (Quickshell.screens[i].name === "HDMI-A-1") return Quickshell.screens[i];
+                if (Quickshell.screens[i].name === monConfig.secondaryMonitor) return Quickshell.screens[i];
             }
             return null;
         }

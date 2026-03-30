@@ -51,6 +51,7 @@ Optimized for gaming: no continuous animations, no blur, polling only when widge
 ├── quickshell/
 │   ├── shell.qml                 # Entry point
 │   ├── MatugenColors.qml         # Theme colors (matugen + fallbacks)
+│   ├── MonitorConfig.qml         # Monitor names (edit for your setup)
 │   ├── modules/
 │   │   ├── bar/
 │   │   │   ├── TopBar.qml        # Horizontal bar (DP-1)
@@ -97,12 +98,17 @@ Optimized for gaming: no continuous animations, no blur, polling only when widge
    ```
    source = /path/to/My-Stein/.config/hypr/hyprland.conf
    ```
-4. Add wallpapers to `~/Pictures/Wallpapers/`
-5. Generate initial theme:
+4. Edit `MonitorConfig.qml` with your monitor names (check `hyprctl monitors`):
+   ```qml
+   readonly property string primaryMonitor: "DP-1"      // your main monitor
+   readonly property string secondaryMonitor: "HDMI-A-1" // your secondary monitor
+   ```
+5. Add wallpapers to `~/Pictures/Wallpapers/`
+6. Generate initial theme:
    ```bash
    matugen image ~/Pictures/Wallpapers/your-wallpaper.jpg
    ```
-6. Start quickshell (or log out and back in):
+7. Start quickshell (or log out and back in):
    ```bash
    quickshell -p ~/.config/quickshell
    ```
